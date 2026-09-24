@@ -1,0 +1,259 @@
+:root{
+  --bg: #0d1613;
+  --panel: #131f1b;
+  --panel-2: #17251f;
+  --line: #223730;
+  --text: #eaf2ee;
+  --text-dim: #93a89f;
+  --accent: #4ee6a4;
+  --accent-dim: #2a7a56;
+  --warn: #e6b34e;
+  --danger: #e65a4e;
+  --mono: 'Courier New', monospace;
+  --sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+
+body{
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.hidden{display:none !important;}
+
+/* ---------- LOGIN ---------- */
+#login-screen{
+  min-height: 100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(78,230,164,0.08), transparent 40%),
+    var(--bg);
+  padding: 24px;
+}
+
+.login-box{
+  width: 100%;
+  max-width: 380px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 32px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom: 28px;
+}
+
+.brand-mark{
+  width: 44px; height:44px;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--accent);
+  color: #06110d;
+  font-family: var(--mono);
+  font-weight:bold;
+  border-radius: 10px;
+  flex-shrink:0;
+}
+.brand-mark.small{width:32px; height:32px; font-size:0.85rem;}
+
+.brand h1{font-size:1.25rem; font-weight:600;}
+.brand-sub{color:var(--text-dim); font-size:0.85rem; margin-top:2px;}
+
+#login-form label{
+  display:block;
+  font-size:0.8rem;
+  color: var(--text-dim);
+  margin: 16px 0 6px;
+}
+
+#login-form input{
+  width:100%;
+  padding: 11px 12px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+#login-form input:focus{
+  outline:none;
+  border-color: var(--accent);
+}
+
+#login-form button{
+  width:100%;
+  margin-top: 22px;
+  padding: 12px;
+  background: var(--accent);
+  color: #06110d;
+  border:none;
+  border-radius: 8px;
+  font-weight:600;
+  font-size:0.95rem;
+  cursor:pointer;
+}
+#login-form button:hover{ background:#5ff2b3; }
+
+.login-error{
+  color: var(--danger);
+  font-size: 0.8rem;
+  margin-top: 10px;
+  min-height: 1em;
+}
+
+.login-hint{
+  margin-top: 20px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-align:center;
+}
+.login-hint code{
+  background: var(--panel-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--mono);
+}
+
+/* ---------- DASHBOARD ---------- */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+.topbar-left{display:flex; align-items:center; gap:12px;}
+.topbar-left h2{font-size:1.05rem;}
+.clock{font-family:var(--mono); font-size:0.75rem; color:var(--text-dim);}
+
+.topbar-right{display:flex; align-items:center; gap:14px;}
+
+.status-pill{
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(78,230,164,0.12);
+  color: var(--accent);
+  border: 1px solid var(--accent-dim);
+}
+
+.user-tag{font-size:0.8rem; color:var(--text-dim);}
+
+.ghost-btn{
+  background:transparent;
+  border:1px solid var(--line);
+  color: var(--text-dim);
+  padding: 7px 14px;
+  border-radius: 7px;
+  font-size:0.8rem;
+  cursor:pointer;
+}
+.ghost-btn:hover{border-color:var(--danger); color:var(--danger);}
+
+.dash-grid{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  padding: 24px 28px 40px;
+}
+
+.card{
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.card-label{
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+/* AQI hero card */
+.aqi-card{ grid-column: span 2; grid-row: span 2; display:flex; flex-direction:column; justify-content:center;}
+.aqi-number{ font-family: var(--mono); font-size: 3.4rem; font-weight:bold; line-height:1;}
+.aqi-status{ margin-top:6px; font-size:1rem; color: var(--accent);}
+.aqi-bar-track{
+  margin-top:20px;
+  height:8px;
+  background: var(--panel-2);
+  border-radius:999px;
+  overflow:hidden;
+}
+.aqi-bar-fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 0.6s ease, background 0.6s ease;
+}
+
+/* sensor cards */
+.sensor-card{ grid-column: span 1; }
+.sensor-value{ font-family: var(--mono); font-size:1.7rem; font-weight:bold;}
+.sensor-value .unit{ font-size:0.85rem; color:var(--text-dim); margin-left:6px; font-weight:normal;}
+.sparkline{ margin-top:12px; height:36px;}
+.sparkline canvas{width:100%; height:100%;}
+
+/* control card */
+.control-card{ grid-column: span 1; }
+.fan-row{ display:flex; align-items:center; justify-content:space-between; margin-top:6px;}
+.fan-state{ font-family:var(--mono); font-size:1.1rem; font-weight:bold; color: var(--text-dim);}
+.control-hint{ font-size:0.75rem; color:var(--text-dim); margin-top:12px;}
+
+.switch{ position:relative; width:44px; height:24px; display:inline-block;}
+.switch input{ opacity:0; width:0; height:0;}
+.slider{
+  position:absolute; cursor:pointer; inset:0;
+  background: var(--panel-2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  transition:.2s;
+}
+.slider::before{
+  content:""; position:absolute; height:16px; width:16px;
+  left:3px; top:3px; background: var(--text-dim);
+  border-radius:50%; transition:.2s;
+}
+.switch input:checked + .slider{ background: var(--accent-dim); border-color:var(--accent);}
+.switch input:checked + .slider::before{ transform:translateX(20px); background:var(--accent);}
+
+/* qr card */
+.qr-card{ grid-column: span 1; display:flex; flex-direction:column; justify-content:space-between;}
+.primary-btn{
+  margin-top:14px;
+  padding:10px 14px;
+  background: var(--accent);
+  color:#06110d;
+  border:none;
+  border-radius:7px;
+  font-weight:600;
+  cursor:pointer;
+}
+.primary-btn:hover{ background:#5ff2b3; }
+
+/* log card */
+.log-card{ grid-column: span 4; }
+.log-list{ list-style:none; font-family: var(--mono); font-size:0.8rem; color: var(--text-dim);}
+.log-list li{ padding:6px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between;}
+.log-list li:last-child{ border-bottom:none;}
+
+@media (max-width: 900px){
+  .dash-grid{ grid-template-columns: repeat(2,1fr); }
+  .aqi-card{ grid-column: span 2; }
+  .log-card{ grid-column: span 2; }
+}
+@media (max-width: 520px){
+  .dash-grid{ grid-template-columns: 1fr; padding:16px;}
+  .aqi-card, .sensor-card, .control-card, .qr-card, .log-card{ grid-column: span 1;}
+  .topbar{ padding:14px 16px; flex-wrap:wrap; gap:10px;}
+}

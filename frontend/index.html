@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AirQuality Advisor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= LOGIN SCREEN ================= -->
+  <section id="login-screen" class="screen">
+    <div class="login-box">
+      <div class="brand">
+        <span class="brand-mark">AQ</span>
+        <div>
+          <h1>AirQuality Advisor</h1>
+          <p class="brand-sub">Live environmental monitoring console</p>
+        </div>
+      </div>
+
+      <form id="login-form">
+        <label for="username">Operator ID</label>
+        <input type="text" id="username" placeholder="e.g. lenn0" autocomplete="username" required>
+
+        <label for="password">Access Code</label>
+        <input type="password" id="password" placeholder="••••••••" autocomplete="current-password" required>
+
+        <button type="submit">Enter Console</button>
+        <p id="login-error" class="login-error"></p>
+      </form>
+
+      <p class="login-hint">Demo credentials — user: <code>admin</code> · pass: <code>aqi2026</code></p>
+    </div>
+  </section>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section id="dashboard-screen" class="screen hidden">
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="brand-mark small">AQ</span>
+        <div>
+          <h2>AirQuality Advisor</h2>
+          <span id="clock" class="clock"></span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span id="conn-status" class="status-pill status-live">● Live data</span>
+        <span id="user-tag" class="user-tag"></span>
+        <button id="logout-btn" class="ghost-btn">Log out</button>
+      </div>
+    </header>
+
+    <main class="dash-grid">
+
+      <div class="card aqi-card">
+        <div class="card-label">Overall Air Quality</div>
+        <div id="aqi-value" class="aqi-number">--</div>
+        <div id="aqi-status" class="aqi-status">--</div>
+        <div class="aqi-bar-track">
+          <div id="aqi-bar-fill" class="aqi-bar-fill"></div>
+        </div>
+      </div>
+
+      <div class="card sensor-card">
+        <div class="card-label">MQ135 · Gas / Air Quality</div>
+        <div class="sensor-value"><span id="mq135">--</span><span class="unit">ppm</span></div>
+        <div class="sparkline"><canvas id="mq135-chart"></canvas></div>
+      </div>
+
+      <div class="card sensor-card">
+        <div class="card-label">GP2Y1010 · Dust Density</div>
+        <div class="sensor-value"><span id="dust">--</span><span class="unit">µg/m³</span></div>
+        <div class="sparkline"><canvas id="dust-chart"></canvas></div>
+      </div>
+
+      <div class="card sensor-card">
+        <div class="card-label">DHT22 · Temperature</div>
+        <div class="sensor-value"><span id="temp">--</span><span class="unit">°C</span></div>
+        <div class="sparkline"><canvas id="temp-chart"></canvas></div>
+      </div>
+
+      <div class="card sensor-card">
+        <div class="card-label">DHT22 · Humidity</div>
+        <div class="sensor-value"><span id="humidity">--</span><span class="unit">%</span></div>
+        <div class="sparkline"><canvas id="humidity-chart"></canvas></div>
+      </div>
+
+      <div class="card control-card">
+        <div class="card-label">Ventilation Fan</div>
+        <div class="fan-row">
+          <span id="fan-state" class="fan-state">OFF</span>
+          <label class="switch">
+            <input type="checkbox" id="fan-toggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <p class="control-hint">Relay channel 1 · manual override</p>
+      </div>
+
+      <div class="card qr-card">
+        <div class="card-label">Field Access</div>
+        <p class="control-hint">Scan the on-device QR code to open this console from the sensor unit.</p>
+        <button id="qr-btn" class="primary-btn">Open QR Scanner</button>
+      </div>
+
+      <div class="card log-card">
+        <div class="card-label">Recent Readings</div>
+        <ul id="log-list" class="log-list"></ul>
+      </div>
+
+    </main>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
