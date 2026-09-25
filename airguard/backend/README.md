@@ -1,5 +1,4 @@
-Server that receives ESP32 data
- # AirGuard backend
+# AirGuard backend
 
 Node/Express API: zone simulation, risk/tier engine, ESP32 traffic proxy, auto-dial stub.
 
@@ -38,9 +37,9 @@ sustained event.
 
 | Tier | Label    | Risk range | Triggers a call |
 |------|----------|-----------|------------------|
-| 1    | Good     | 0–10      | no |
-| 2    | Moderate | 10–25     | no |
-| 3    | Poor     | 25–50     | yes |
+| 1    | Good     | 0-10      | no |
+| 2    | Moderate | 10-25     | no |
+| 3    | Poor     | 25-50     | yes |
 | 4    | Severe   | 50+       | yes |
 
 Risk = smoothed `CO2 * 0.02 + PM2.5 * 0.30`. Tune `TIER_THRESHOLDS` and the

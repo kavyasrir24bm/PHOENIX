@@ -4,450 +4,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>AirQuality Advisor</title>
 
   <link rel="stylesheet" href="style.css">
+  <!-- HTML5 QR Code Library CDN -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 
 <body>
-
-  <!-- =========================
-       DASHBOARD
-  ========================== -->
 
   <section id="dashboard-screen" class="screen">
 
     <!-- TOP BAR -->
     <header class="topbar">
-
       <div class="topbar-left">
-
         <span class="brand-mark small">AQ</span>
-
         <div>
           <h2>AirQuality Advisor</h2>
           <span id="clock" class="clock"></span>
         </div>
-
       </div>
 
       <div class="topbar-right">
-
-        <button
-          id="mute-btn"
-          class="ghost-btn"
-          title="Toggle alert sound">
+        <button id="mute-btn" class="ghost-btn" title="Toggle alert sound">
           🔊 Sound
         </button>
-
-        <span
-          id="conn-status"
-          class="status-pill status-live">
+        <span id="conn-status" class="status-pill status-live">
           ● Live
         </span>
-
       </div>
-
     </header>
 
-
     <!-- ALERT BANNER -->
-
-    <div
-      id="alert-banner"
-      class="alert-banner hidden">
-
+    <div id="alert-banner" class="alert-banner hidden">
       <span id="alert-text"></span>
-
     </div>
 
-
     <!-- MAIN DASHBOARD -->
-
     <main class="dash-main">
 
-      <!-- =========================
-           ZONE STRIP
-      ========================== -->
+      <!-- ZONE STRIP -->
+      <section class="zone-strip" id="zone-strip"></section>
 
-      <section
-        class="zone-strip"
-        id="zone-strip">
-      </section>
-
-
-      <!-- =========================
-           DASHBOARD GRID
-      ========================== -->
-
+      <!-- DASHBOARD GRID -->
       <section class="dash-grid">
 
-
         <!-- PRIORITY SCORE -->
-
         <div class="card aqi-card">
-
-          <div
-            class="card-label"
-            id="zone-title">
-            Priority Score
-          </div>
-
-          <div
-            id="aqi-value"
-            class="aqi-number">
-            --
-          </div>
-
-          <div
-            id="aqi-status"
-            class="aqi-status">
-            --
-          </div>
-
+          <div class="card-label" id="zone-title">Priority Score</div>
+          <div id="aqi-value" class="aqi-number">--</div>
+          <div id="aqi-status" class="aqi-status">--</div>
           <div class="aqi-bar-track">
-
-            <div
-              id="aqi-bar-fill"
-              class="aqi-bar-fill">
-            </div>
-
+            <div id="aqi-bar-fill" class="aqi-bar-fill"></div>
           </div>
-
-          <div
-            id="trend-warning"
-            class="trend-warning hidden">
-
+          <div id="trend-warning" class="trend-warning hidden">
             ⚠ Rising trend — approaching next tier
-
           </div>
-
         </div>
-
 
         <!-- MQ135 -->
-
         <div class="card sensor-card">
-
-          <div class="card-label">
-            MQ135 · Gas / Air Quality
-          </div>
-
+          <div class="card-label">MQ135 · Gas / Air Quality</div>
           <div class="sensor-value">
-
-            <span id="mq135">
-              --
-            </span>
-
-            <span class="unit">
-              ppm
-            </span>
-
+            <span id="mq135">--</span>
+            <span class="unit">ppm</span>
           </div>
-
-          <div class="sensor-description">
-            Relative gas-quality indicator
-          </div>
-
+          <div class="sensor-description">Relative gas-quality indicator</div>
           <div class="sparkline">
-
-            <canvas
-              id="mq135-chart">
-            </canvas>
-
+            <canvas id="mq135-chart"></canvas>
           </div>
-
         </div>
-
 
         <!-- GP2Y1010 -->
-
         <div class="card sensor-card">
-
-          <div class="card-label">
-            GP2Y1010 · Dust Density
-          </div>
-
+          <div class="card-label">GP2Y1010 · Dust Density</div>
           <div class="sensor-value">
-
-            <span id="dust">
-              --
-            </span>
-
-            <span class="unit">
-              µg/m³
-            </span>
-
+            <span id="dust">--</span>
+            <span class="unit">µg/m³</span>
           </div>
-
-          <div class="sensor-description">
-            Optical dust-density estimate
-          </div>
-
+          <div class="sensor-description">Optical dust-density estimate</div>
           <div class="sparkline">
-
-            <canvas
-              id="dust-chart">
-            </canvas>
-
+            <canvas id="dust-chart"></canvas>
           </div>
-
         </div>
-
 
         <!-- TEMPERATURE -->
-
         <div class="card sensor-card">
-
-          <div class="card-label">
-            DHT22 · Temperature
-          </div>
-
+          <div class="card-label">DHT22 · Temperature</div>
           <div class="sensor-value">
-
-            <span id="temp">
-              --
-            </span>
-
-            <span class="unit">
-              °C
-            </span>
-
+            <span id="temp">--</span>
+            <span class="unit">°C</span>
           </div>
-
           <div class="sparkline">
-
-            <canvas
-              id="temp-chart">
-            </canvas>
-
+            <canvas id="temp-chart"></canvas>
           </div>
-
         </div>
-
 
         <!-- HUMIDITY -->
-
         <div class="card sensor-card">
-
-          <div class="card-label">
-            DHT22 · Humidity
-          </div>
-
+          <div class="card-label">DHT22 · Humidity</div>
           <div class="sensor-value">
-
-            <span id="humidity">
-              --
-            </span>
-
-            <span class="unit">
-              %
-            </span>
-
+            <span id="humidity">--</span>
+            <span class="unit">%</span>
           </div>
-
           <div class="sparkline">
-
-            <canvas
-              id="humidity-chart">
-            </canvas>
-
+            <canvas id="humidity-chart"></canvas>
           </div>
-
         </div>
 
-
-        <!-- =========================
-             ENVIRONMENTAL RESPONSE
-        ========================== -->
-
+        <!-- VENTILATION CONTROL -->
         <div class="card control-card">
-
-          <div class="card-label">
-            Ventilation Fan
-          </div>
-
+          <div class="card-label">Ventilation Fan</div>
           <div class="fan-row">
-
-            <span
-              id="fan-state"
-              class="fan-state">
-              OFF
-            </span>
-
+            <span id="fan-state" class="fan-state">OFF</span>
             <label class="switch">
-
-              <input
-                type="checkbox"
-                id="fan-toggle">
-
+              <input type="checkbox" id="fan-toggle">
               <span class="slider"></span>
-
             </label>
-
           </div>
-
-          <p
-            class="control-hint"
-            id="source-hint">
-
-            Relay channel 1 · manual override
-
-          </p>
-
+          <p class="control-hint" id="source-hint">Relay channel 1 · manual override</p>
         </div>
 
-
-        <!-- =========================
-             RECOMMENDED ACTION
-        ========================== -->
-
+        <!-- RECOMMENDED ACTION -->
         <div class="card action-card">
-
-          <div class="card-label">
-            Recommended Action
-          </div>
-
-          <div
-            id="action-title"
-            class="action-title">
-
-            Monitoring
-
-          </div>
-
-          <p
-            id="action-description"
-            class="control-hint">
-
-            Waiting for sensor data...
-
-          </p>
-
-          <div
-            id="action-level"
-            class="action-level">
-
-            NORMAL
-
-          </div>
-
+          <div class="card-label">Recommended Action</div>
+          <div id="action-title" class="action-title">Monitoring</div>
+          <p id="action-description" class="control-hint">Waiting for sensor data...</p>
+          <div id="action-level" class="action-level">NORMAL</div>
         </div>
 
-
-        <!-- =========================
-             QR ACCESS
-        ========================== -->
-
+        <!-- QR ACCESS -->
         <div class="card qr-card">
-
-          <div class="card-label">
-            Field Access
-          </div>
-
-          <p class="control-hint">
-
-            Scan the on-device QR code
-            to open this console from
-            the sensor unit.
-
-          </p>
-
-          <button
-            id="qr-btn"
-            class="primary-btn">
-
-            Open QR Scanner
-
-          </button>
-
+          <div class="card-label">Field Access</div>
+          <p class="control-hint">Scan the on-device QR code to open this console from the sensor unit.</p>
+          <button id="qr-btn" class="primary-btn">Open QR Scanner</button>
         </div>
 
-
-        <!-- =========================
-             ZONE INFORMATION
-        ========================== -->
-
+        <!-- ZONE INFORMATION -->
         <div class="card info-card">
-
-          <div class="card-label">
-            Zone Information
-          </div>
-
+          <div class="card-label">Zone Information</div>
           <div class="info-row">
-
-            <span>
-              Current Zone
-            </span>
-
-            <strong id="info-zone">
-              --
-            </strong>
-
+            <span>Current Zone</span>
+            <strong id="info-zone">--</strong>
           </div>
-
           <div class="info-row">
-
-            <span>
-              Data Source
-            </span>
-
-            <strong id="info-source">
-              --
-            </strong>
-
+            <span>Data Source</span>
+            <strong id="info-source">--</strong>
           </div>
-
           <div class="info-row">
-
-            <span>
-              Monitoring Mode
-            </span>
-
-            <strong id="info-mode">
-              --
-            </strong>
-
+            <span>Monitoring Mode</span>
+            <strong id="info-mode">--</strong>
           </div>
-
         </div>
 
-
-        <!-- =========================
-             RECENT READINGS
-        ========================== -->
-
+        <!-- RECENT READINGS -->
         <div class="card log-card">
-
           <div class="card-label">
-
-            Recent Readings —
-            <span id="log-zone-name"></span>
-
+            Recent Readings — <span id="log-zone-name"></span>
           </div>
-
-          <ul
-            id="log-list"
-            class="log-list">
-          </ul>
-
+          <ul id="log-list" class="log-list"></ul>
         </div>
-
 
       </section>
-
     </main>
-
   </section>
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
+  <!-- QR SCANNER MODAL -->
+  <div id="qr-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Scan Sensor QR Code</h3>
+      <div id="qr-reader" style="width: 100%;"></div>
+      <button id="close-qr-btn" class="ghost-btn" style="margin-top: 15px;">Close Scanner</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
-
 </body>
 
 </html>

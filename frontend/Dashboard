@@ -1,0 +1,128 @@
+import React, { useState, useEffect } from 'react';
+
+const SERVER_URL = 'https://sydcol4201-stack-xxxxx-3000.app.github.dev';
+
+function getTier(gas, dust) {
+  if (gas > 300 || dust > 150) return 3;
+  if (gas > 150 || dust > 75) return 2;
+  return 1;
+}
+
+const tierInfo = {
+  1: { label: 'Safe', color: '#22c55e' },
+  2: { label: 'Caution', color: '#eab308' },
+  3: { label: 'Danger', color: '#ef4444' },
+};
+
+function Dashboard() {
+  const [sensorData, setSensorData] = useState({
+    gas: 0, dust: 0, temp: 0, humidity: 0, timestamp: null
+  });
+  const [isOnline, setIsOnline] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`${SERVER_URL}/api/reading`);
+        const data = await res.json();
+        setSensorData(data);
+        setIsOnline(data.timestamp && Date.now() - data.timestamp < 10000);
+      } catch (err) {
+        console.error('Fetch failed:', err);
+        setIsOnline(false);
+      }
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const tier = getTier(sensorData.gas, sensorData.dust);
+  const { label, color } = tierInfo[tier];
+
+  return (
+    <div style={styles.page}>
+      <div style={styles.header}>
+        <h1 style={styles.title}>Air Quality Dashboard</h1>
+        <div style={styles.statusRow}>
+          <span style={{ ...styles.dot, background: isOnline ? '#22c55e' : '#666' }} />
+          <span style={styles.statusText}>{isOnline ? 'Live' : 'Offline'}</span>
+        </div>
+      </div>
+
+      <div style={{ ...styles.tierCard, borderColor: color }}>
+        <span style={{ ...styles.tierLabel, color }}>{label}</span>
+        <span style={styles.tierSub}>Zone status</span>
+      </div>
+
+      <div style={styles.grid}>
+        <Metric label="Gas" value={sensorData.gas} unit="ppm" />
+        <Metric label="Dust (PM2.5)" value={sensorData.dust} unit="µg/m³" />
+        <Metric label="Temp" value={sensorData.temp} unit="°C" />
+        <Metric label="Humidity" value={sensorData.humidity} unit="%" />
+      </div>
+
+      <p style={styles.timestamp}>
+        Last updated: {sensorData.timestamp ? new Date(sensorData.timestamp).toLocaleTimeString() : 'never'}
+      </p>
+    </div>
+  );
+}
+
+function Metric({ label, value, unit }) {
+  return (
+    <div style={styles.metricCard}>
+      <span style={styles.metricLabel}>{label}</span>
+      <span style={styles.metricValue}>{value} <small style={styles.unit}>{unit}</small></span>
+    </div>
+  );
+}
+
+const styles = {
+  page: {
+    background: '#0f172a',
+    color: '#f1f5f9',
+    minHeight: '100vh',
+    padding: '32px',
+    fontFamily: 'sans-serif',
+  },
+  header: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '24px',
+  },
+  title: { margin: 0, fontSize: '24px' },
+  statusRow: { display: 'flex', alignItems: 'center', gap: '8px' },
+  dot: { width: '10px', height: '10px', borderRadius: '50%' },
+  statusText: { fontSize: '14px', color: '#94a3b8' },
+  tierCard: {
+    border: '2px solid',
+    borderRadius: '12px',
+    padding: '20px',
+    marginBottom: '24px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  tierLabel: { fontSize: '28px', fontWeight: 'bold' },
+  tierSub: { fontSize: '13px', color: '#94a3b8' },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 1fr)',
+    gap: '16px',
+  },
+  metricCard: {
+    background: '#1e293b',
+    borderRadius: '10px',
+    padding: '16px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+  },
+  metricLabel: { fontSize: '13px', color: '#94a3b8' },
+  metricValue: { fontSize: '22px', fontWeight: 'bold' },
+  unit: { fontSize: '13px', color: '#94a3b8', fontWeight: 'normal' },
+  timestamp: { marginTop: '20px', fontSize: '12px', color: '#64748b' },
+};
+
+export default Dashboard;
